@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@500&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+* > * {
+    font-family: 'Bangers', cursive;
+    font-family: 'Poppins', sans-serif;
+}
