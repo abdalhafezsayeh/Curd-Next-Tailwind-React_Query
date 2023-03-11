@@ -2,21 +2,20 @@ import React from "react";
 import {GrUpdate } from 'react-icons/gr'
 import {AiOutlineDelete} from 'react-icons/ai'
 import { useQuery } from 'react-query';
-import { reqGetUsers } from "@/lib/helper";
-
+import { getAllUsers } from "@/lib/helper";
+import { useSelector } from "react-redux";
 
 
 function Table() {
 
+  const state = useSelector((state) => state.app)
+  // console.log(state.visibleToggle)
 
-
-  const {isLoading, isError, data, error} = useQuery('get-users', () => reqGetUsers());
-
+  // Gett All Users 
+  const {isLoading, isError, data, error} = useQuery('get-users', () => getAllUsers());
 
   if(isLoading) return <div>Loading...</div>
   if(isError) return <div>Error {error.message}</div>
-
-  console.log(data.data)
 
 
   return (
@@ -31,25 +30,25 @@ function Table() {
           <th className="p-2">Status</th>
           <th className="p-2">Actions</th>
         </tr>
-        {data?.data.map((user, i) => (
+            {data?.data.map((user, i) => (
 
-        <tr className="h-10" key={i}>
-          <td className="p-2  border">{user?.name}</td>
-          <td className="p-2  border">{user?.email}</td>
-          <td className="p-2  border">{user?.salary}</td>
-          <td className="p-2  border">{user?.birth}</td>
-          <td className={`p-2  border ${user?.status == "InActive" ? "bg-red-300": "bg-green-300"}`}>{user?.status}</td>
-          <td className="p-2  border flex justify-around items-center">
-            <span className="text-blue-500 cursor-pointer hover:rotate-180 duration-500">
-              <GrUpdate size={25} />
-            </span>
-            <span className="text-red-400 cursor-pointer hover:scale-125 duration-200">
-              <AiOutlineDelete size={25} />
-            </span>
-          </td>
-        </tr>
+            <tr className="h-10" key={i}>
+              <td className="p-2  border">{user?.name}</td>
+              <td className="p-2  border">{user?.email}</td>
+              <td className="p-2  border">{user?.salary}</td>
+              <td className="p-2  border">{user?.birth}</td>
+              <td className={`p-2  border ${user?.status == "InActive" ? "bg-red-300": "bg-green-300"}`}>{user?.status}</td>
+              <td className="p-2  border flex justify-around items-center">
+                <span className="text-blue-500 cursor-pointer hover:rotate-180 duration-500">
+                  <GrUpdate size={25} />
+                </span>
+                <span className="text-red-400 cursor-pointer hover:scale-125 duration-200">
+                  <AiOutlineDelete size={25} />
+                </span>
+              </td>
+            </tr>
 
-        ))}
+            ))}
 
         
         </tbody>

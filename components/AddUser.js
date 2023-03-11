@@ -1,4 +1,6 @@
+import { addUser } from '@/lib/helper'
 import React,{ useReducer } from 'react'
+import { useMutation, useQueryClient } from 'react-query'
 import Error from './Error'
 import Sucses from './Sucses'
 
@@ -12,18 +14,42 @@ const handleGetDataFromInput = (state, employee) => {
 
 function AddUser() {
 
-    const [formData, getFormData] = useReducer(handleGetDataFromInput, {})
+    const [formData, getFormData] = useReducer(handleGetDataFromInput, {});
+
+    const queryClient = useQueryClient()
+    const {mutate, isLoading, isError, error, isSuccess} =  useMutation(addUser, {
+        onSuccess: (data) => {
+
+            // queryClient.invalidateQueries('get-users')
+            queryClient.setQueryData('get-users', (oldeData) => {
+                return {
+                    ...oldeData,
+                    data: [...oldeData.data, data.data ]
+                }
+            })
+
+        }
+    })
 
     const handleAddEmployee = (e) => {
         e.preventDefault();
         if(Object.keys(formData).length == 0 ) return console.log('from not found')
 
-        console.log(formData)
+        let {firstName, lastName, email, salary, date, status} = formData;
+
+        const model = {
+            name: `${firstName} ${lastName}`,
+            email, salary, date, status
+        }
+        
+        mutate(model)
+         
     }
 
-    // if(Object.keys(formData).length > 0) return <Sucses />
-    // if(Object.keys(formData).length > 0) return <Error />
 
+    if(isLoading) return <div>Loading...</div>
+    if(isError) return <Error message={error.message} />
+    if(isSuccess) return <Sucses />
 
 
   return (
