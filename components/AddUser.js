@@ -1,4 +1,6 @@
 import React,{ useReducer } from 'react'
+import Error from './Error'
+import Sucses from './Sucses'
 
 
 const handleGetDataFromInput = (state, employee) => {
@@ -18,6 +20,10 @@ function AddUser() {
 
         console.log(formData)
     }
+
+    // if(Object.keys(formData).length > 0) return <Sucses />
+    // if(Object.keys(formData).length > 0) return <Error />
+
 
 
   return (
