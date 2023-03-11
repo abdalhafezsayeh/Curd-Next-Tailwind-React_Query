@@ -1,3 +1,4 @@
+import Form from '@/components/Form'
 import Table from '@/components/Table'
 import Head from 'next/head'
 
@@ -12,19 +13,29 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-
-        {/* Parent App  */}
         <div>
-
-            {/* Start Title */}
+            {/* Title */}
             <div>
               <h1 className='text-center capitalize font-medium text-xl lg:text-4xl mt-5'>employee management</h1>
-
+               
+                {/* Button Add Employee Management */}
               <div className='container mx-auto py-5 border-b'> 
                 <div>
                   <button className='bg-slate-800 text-white rounded py-2 px-5'>Add Employee</button>
                 </div>
               </div>
+
+              {/* Form  */}
+              <div className='container mx-auto py-5'>
+                  <Form />
+              </div>
+
+              {/* Table  */}
+              <div className='container mx-auto'>
+                <Table />
+              </div>
+
+
             </div>
 
         </div>
