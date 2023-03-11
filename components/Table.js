@@ -1,8 +1,24 @@
 import React from "react";
 import {GrUpdate } from 'react-icons/gr'
 import {AiOutlineDelete} from 'react-icons/ai'
+import { useQuery } from 'react-query';
+import { reqGetUsers } from "@/lib/helper";
+
+
 
 function Table() {
+
+
+
+  const {isLoading, isError, data, error} = useQuery('get-users', () => reqGetUsers());
+
+
+  if(isLoading) return <div>Loading...</div>
+  if(isError) return <div>Error {error.message}</div>
+
+  console.log(data.data)
+
+
   return (
     <div>
       <table className="w-full p-2 ">
@@ -15,12 +31,14 @@ function Table() {
           <th className="p-2">Status</th>
           <th className="p-2">Actions</th>
         </tr>
-        <tr className="h-10">
-          <td className="p-2  border">Ahmed</td>
-          <td className="p-2  border">Ahmed@gmail.com</td>
-          <td className="p-2  border">2500</td>
-          <td className="p-2  border">20-10-1997</td>
-          <td className="p-2  border">Active</td>
+        {data?.data.map((user, i) => (
+
+        <tr className="h-10" key={i}>
+          <td className="p-2  border">{user?.name}</td>
+          <td className="p-2  border">{user?.email}</td>
+          <td className="p-2  border">{user?.salary}</td>
+          <td className="p-2  border">{user?.birth}</td>
+          <td className={`p-2  border ${user?.status == "InActive" ? "bg-red-300": "bg-green-300"}`}>{user?.status}</td>
           <td className="p-2  border flex justify-around items-center">
             <span className="text-blue-500 cursor-pointer hover:rotate-180 duration-500">
               <GrUpdate size={25} />
@@ -30,11 +48,17 @@ function Table() {
             </span>
           </td>
         </tr>
+
+        ))}
+
         
         </tbody>
       </table>
     </div>
   );
 }
+
+
+
 
 export default Table;
