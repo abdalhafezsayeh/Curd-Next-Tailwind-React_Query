@@ -1,9 +1,17 @@
 import Form from '@/components/Form'
 import Table from '@/components/Table'
 import Head from 'next/head'
+import { useState } from 'react'
 
 
 export default function Home() {
+
+  const [showForm, setShowForm] = useState(false);
+
+  const handleShowForm = () => {
+    setShowForm(!showForm);
+  }
+
   return (
     <>
       <Head>
@@ -21,13 +29,13 @@ export default function Home() {
                 {/* Button Add Employee Management */}
               <div className='container mx-auto py-5 border-b'> 
                 <div>
-                  <button className='bg-slate-800 text-white rounded py-2 px-5'>Add Employee</button>
+                  <button onClick={handleShowForm} className='bg-slate-800 text-white rounded py-2 px-5'>Add Employee</button>
                 </div>
               </div>
 
               {/* Form  */}
               <div className='container mx-auto py-5'>
-                  <Form />
+                {showForm ? <Form /> : <></>}
               </div>
 
               {/* Table  */}
