@@ -27,7 +27,6 @@ function AddUser() {
                     data: [...oldeData.data, data.data ]
                 }
             })
-
         }
     })
 
@@ -41,17 +40,15 @@ function AddUser() {
             name: `${firstName} ${lastName}`,
             email, salary, date, status
         }
-        
         mutate(model)
-         
     }
 
 
     if(isLoading) return <div>Loading...</div>
     if(isError) return <Error message={error.message} />
-    if(isSuccess) return <Sucses />
+    if(isSuccess) return <Sucses message={'Done Add Employee'} />
 
-
+    
   return (
     <form className='grid lg:grid-cols-2 w-4/6 gap-3' onSubmit={handleAddEmployee}>
     {/* input first name  */}
@@ -72,7 +69,7 @@ function AddUser() {
     </div>
     {/* input date */}
     <div>
-        <input onChange={getFormData} type='date' name='birth' className='border py-1 px-4 rounded-md focus:outline-none cursor-pointer' />
+        <input onChange={getFormData} type='date' name='date' className='border py-1 px-4 rounded-md focus:outline-none cursor-pointer' />
     </div>
 
 
