@@ -1,17 +1,16 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import AddUser from './AddUser';
 import UpUser from './UpUser';
 
 
-
-
 function Form() {
 
-    const flage = true
+    const flag = useSelector((state) => state.app.client.toggleWithId)
 
   return (
         <>
-            { flage ? <AddUser />  : <UpUser />  }
+            { flag ? <UpUser /> : <AddUser />  }
         </>
 
   )
