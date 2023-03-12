@@ -72,7 +72,7 @@ function AddUser() {
     </div>
     {/* input date */}
     <div>
-        <input onChange={getFormData} type='date' name='date' className='border py-1 px-4 rounded-md focus:outline-none cursor-pointer' />
+        <input onChange={getFormData} type='date' name='birth' className='border py-1 px-4 rounded-md focus:outline-none cursor-pointer' />
     </div>
 
 

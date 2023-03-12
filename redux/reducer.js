@@ -2,20 +2,23 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-    visibleToggle: false
-}
+  client: { visibleToggle: false, toggleWithId: undefined },
+};
 
 export const ReducerSlice = createSlice({
     name:'curd',
     initialState,
     reducers: {
         toggleAction: (state) => {
-            state.visualToggle = !state.visualToggle
+            state.client.visibleToggle = !state.client.visibleToggle
+        },
+        toggleActionWhenwithId: (state , action) => {
+            state.client.toggleWithId = action.payload
         }
     }
 })
 
 
-export const {toggleAction} = ReducerSlice.actions;
+export const {toggleAction, toggleActionWhenwithId} = ReducerSlice.actions;
 
 export default ReducerSlice.reducer;

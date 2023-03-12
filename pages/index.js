@@ -1,15 +1,24 @@
 import Form from '@/components/Form'
 import Table from '@/components/Table'
+import { toggleAction, toggleActionWhenwithId } from '@/redux/reducer'
 import Head from 'next/head'
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 export default function Home() {
 
-  const [showForm, setShowForm] = useState(false);
+  const dispatch = useDispatch()
+
+  // const [showForm, setShowForm] = useState(false);
+  const toggleFlag = useSelector((state) => state.app.client.visibleToggle)
+
+
 
   const handleShowForm = () => {
-    setShowForm(!showForm);
+    // setShowForm(!showForm);
+    dispatch(toggleAction())
+    dispatch(toggleActionWhenwithId(undefined))
   }
 
 
@@ -36,7 +45,7 @@ export default function Home() {
 
               {/* Form  */}
               <div className='container mx-auto py-5'>
-                {showForm ? <Form /> : <></>}
+                {toggleFlag ? <Form /> : <></>}
               </div>
 
               {/* Table  */}
