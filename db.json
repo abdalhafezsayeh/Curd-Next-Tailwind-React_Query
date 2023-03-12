@@ -1,20 +1,20 @@
 {
   "users": [
     {
-      "id": 1,
-      "name": "Ahmed",
-      "email": "Ahmed@gmail.com",
+      "name": "Ahmed saad",
       "salary": 200,
-      "birth": "20-10-1997",
-      "status": "Active"
+      "status": "Active",
+      "email": "Ahmed@gmail.com",
+      "date": "20-10-1997",
+      "id": 1
     },
     {
-      "id": 2,
-      "name": "Saad",
-      "email": "Saad@gmail.com",
-      "salary": 2500,
-      "birth": "20-10-2002",
-      "status": "InActive"
+      "name": "Mohammed Ahmed",
+      "salary": "2055",
+      "status": "InActive",
+      "email": "@gmail.com",
+      "date": "20-10-1997",
+      "id": 3
     }
   ]
 }

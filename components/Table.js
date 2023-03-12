@@ -1,19 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import {GrUpdate } from 'react-icons/gr'
 import {AiOutlineDelete} from 'react-icons/ai'
 import { useQueryClient, useQuery } from 'react-query';
 import { deleteUser, getAllUsers } from "@/lib/helper";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toggleAction, toggleActionWhenwithId } from "@/redux/reducer";
 
 
 function Table() {
+  const [showConfirm, setShowConFirm] = useState(false)
+  const [yesOrNo, setYesOrNo] = useState(undefined)
 
   const dispatch = useDispatch()
   const queryClient = useQueryClient()
-  
-  const toggleFlag = useSelector((state) => state.app.client.visibleToggle)
-  console.log(toggleFlag)
 
   // Gett All Users 
   const {isLoading, isError, data, error} = useQuery('get-users', () => getAllUsers());
@@ -21,23 +20,30 @@ function Table() {
   if(isLoading) return <div>Loading...</div>
   if(isError) return <div>Error {error.message}</div>
 
-
   const handleToggleFlag = (id) => {
     dispatch(toggleAction())
     dispatch(toggleActionWhenwithId(id))
-
   }
-
 
   const handleDeleteUser = async (id) => {
-    await deleteUser(id)
-    await queryClient.invalidateQueries('get-users')
+    setShowConFirm(!showConfirm)
+    setYesOrNo(id)
   }
 
-
+  const handleConfirm = async (what) => {
+    if(what == 'yes') {
+      await deleteUser(yesOrNo)
+      await queryClient.invalidateQueries('get-users')
+      setShowConFirm(!showConfirm)
+    } else {
+      setShowConFirm(!showConfirm)
+    }
+  }
 
   return (
     <div>
+      {showConfirm ? ( <ConfirmDelet con={handleConfirm} /> ) : <></>}
+        
       <table className="w-full p-2 ">
         <tbody>
         <tr className="text-left bg-black text-white">
@@ -54,7 +60,7 @@ function Table() {
               <td className="p-2  border">{user?.name}</td>
               <td className="p-2  border">{user?.email}</td>
               <td className="p-2  border">{user?.salary}</td>
-              <td className="p-2  border">{user?.birth}</td>
+              <td className="p-2  border">{user?.date}</td>
               <td className={`p-2  border ${user?.status == "InActive" ? "bg-red-300": "bg-green-300"}`}>{user?.status}</td>
               <td className="p-2  border flex justify-around items-center">
                 <span onClick={() => handleToggleFlag(user.id)} className="text-blue-500 cursor-pointer hover:rotate-180 duration-500">
@@ -76,6 +82,16 @@ function Table() {
   );
 }
 
-
+const ConfirmDelet = ({con}) => {
+  return (
+    <div className="border py-3">
+      <div className="text-center">
+        <h1>Are You Soure ?</h1>
+        <button onClick={() => con('yes')} className="border mx-2 px-3 border-green-300 text-green-500">yes</button>
+        <button onClick={() => con('no')} className="border mx-2 px-3 border-red-300 text-red-400">No</button>
+      </div>
+    </div>
+  )
+}
 
 export default Table;

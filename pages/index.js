@@ -2,7 +2,6 @@ import Form from '@/components/Form'
 import Table from '@/components/Table'
 import { toggleAction, toggleActionWhenwithId } from '@/redux/reducer'
 import Head from 'next/head'
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 
