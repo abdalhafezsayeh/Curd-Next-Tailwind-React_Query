@@ -20,15 +20,19 @@ function AddUser() {
     const {mutate, isLoading, isError, error, isSuccess} =  useMutation(addUser, {
         onSuccess: (data) => {
 
-            // queryClient.invalidateQueries('get-users')
-            queryClient.setQueryData('get-users', (oldeData) => {
-                return {
-                    ...oldeData,
-                    data: [...oldeData.data, data.data ]
-                }
-            })
+            queryClient.invalidateQueries('get-users') 
+
+            // Hard Use With Pagination Want Page Number From Back-End 
+
+            // queryClient.setQueryData(['get-users'], (oldeData) => {
+            //     return {
+            //         ...oldeData,
+            //         data: [...oldeData.data, data.data ]
+            //     }
+            // })
         }
     })
+
 
     const handleAddEmployee = (e) => {
         e.preventDefault();
