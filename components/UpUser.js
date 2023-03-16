@@ -13,13 +13,14 @@ const handleGetDataFromInput = (state, employee) => {
 }
 
 function UpUser() {
-
+    
+    const [formData, getFormData] = useReducer(handleGetDataFromInput, {})
+    
     const idUser =  useSelector((state) => state.app.client.toggleWithId)
 
     const {data, isError, isLoading, error} = useQuery(['user', idUser], () => getUser(idUser));
     const user = data?.data;
 
-    const [formData, getFormData] = useReducer(handleGetDataFromInput, {})
 
 
    const queryClient = useQueryClient() 
@@ -31,8 +32,9 @@ function UpUser() {
     })
 
 
-    const handleAddEmployee =  (e) => {
+    const handleUpdateEmployee =  (e) => {
         e.preventDefault();
+
         let useName = `${formData.firstName??user?.name?.split(' ')[0]} ${formData.lastName??user?.name?.split(' ')[1]}`
         let updateData = Object.assign({}, user,formData, {name:useName})
 
@@ -46,11 +48,10 @@ function UpUser() {
 
     if(isLoading) return <div>Loading...</div>
     if(isError) return <div>{error}</div>
-
     if(doneUbdate) return <Sucses message={'Done Update Employee'} />
 
   return (
-    <form className='grid lg:grid-cols-2 w-4/6 gap-3' onSubmit={handleAddEmployee}>
+    <form className='grid lg:grid-cols-2 w-4/6 gap-3' onSubmit={handleUpdateEmployee}>
         {/* input first name  */}
         <div>
             <input onChange={getFormData} defaultValue={user?.name?.split(' ')[0]} type='text' name='firstName' placeholder='First Name' className='border py-1 px-3 rounded-md w-full focus:outline-none' />
@@ -75,11 +76,11 @@ function UpUser() {
         {/* input active or non  */}
         <div className='flex gap-2 items-center'>
             <div className='flex items-center'>
-                <input onChange={getFormData} defaultChecked={user.status == 'Active'} type='radio' value='Active' id='defaultActive' name='status' className='form-check-input appearance-none w-4 h-4 border border-gray-400 rounded-full bg-white checked:bg-green-500 cursor-pointer focus:outline-none bg-no-repeat bg-center bg-contain float-left mr-2 ' />
+                <input onChange={getFormData} defaultChecked={user?.status == 'Active'} type='radio' value='Active' id='defaultActive' name='status' className='form-check-input appearance-none w-4 h-4 border border-gray-400 rounded-full bg-white checked:bg-green-500 cursor-pointer focus:outline-none bg-no-repeat bg-center bg-contain float-left mr-2 ' />
                 <label htmlFor='defaultActive' className='text-gray-600'>Active</label>
             </div>
             <div className='flex items-center'>
-                <input onChange={getFormData} defaultChecked={user.status !== 'Active'} type='radio' value='InActive' id='defaultInActive' name='status' className='form-check-input appearance-none w-4 h-4 border border-gray-400 rounded-full bg-white checked:bg-red-500 cursor-pointer focus:outline-none bg-no-repeat bg-center bg-contain float-left mr-2 ' />
+                <input onChange={getFormData} defaultChecked={user?.status !== 'Active'} type='radio' value='InActive' id='defaultInActive' name='status' className='form-check-input appearance-none w-4 h-4 border border-gray-400 rounded-full bg-white checked:bg-red-500 cursor-pointer focus:outline-none bg-no-repeat bg-center bg-contain float-left mr-2 ' />
                 <label htmlFor='defaultInActive' className='text-gray-600'>InActive</label>
             </div>
         </div>

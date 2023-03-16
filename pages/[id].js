@@ -7,14 +7,11 @@ import { useSelector } from 'react-redux';
 function DetailsUser() {
 
     const router = useRouter();
+    const queryClient = useQueryClient() 
 
     let idUser = router.query.id
 
-    const queryClient = useQueryClient() 
-
     const numberPagination = useSelector((state) => state.app.client.numberPagination);
-
-    console.log(numberPagination)
 
     const {isLoading, isError, error , data} = useQuery(['details-user', parseInt(idUser) ],() => getUser(idUser),{
         initialData: () => {
@@ -29,8 +26,6 @@ function DetailsUser() {
                 return undefined
             }
         }
-
-
     })
 
 
