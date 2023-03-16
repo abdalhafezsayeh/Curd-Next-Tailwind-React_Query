@@ -9,13 +9,11 @@ export default function Home() {
 
   const dispatch = useDispatch()
 
-  // const [showForm, setShowForm] = useState(false);
   const toggleFlag = useSelector((state) => state.app.client.visibleToggle)
 
 
 
   const handleShowForm = () => {
-    // setShowForm(!showForm);
     dispatch(toggleAction())
     dispatch(toggleActionWhenwithId(undefined))
   }
@@ -33,6 +31,7 @@ export default function Home() {
         <div>
             {/* Title */}
             <div>
+
               <h1 className='text-center capitalize font-medium text-xl lg:text-4xl mt-5'>employee management</h1>
                
                 {/* Button Add Employee Management */}
@@ -52,11 +51,8 @@ export default function Home() {
                 <Table />
               </div>
 
-
             </div>
-
         </div>
-      
       </main>
     </>
   )

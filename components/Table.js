@@ -15,15 +15,12 @@ function Table() {
 
   const dispatch = useDispatch()
   const queryClient = useQueryClient()
-
+  const router = useRouter();
 
   // Gett All Users 
   const {isLoading, isFetching, isError, data, error} = useQuery(['get-users', pageNumberPagination ], () => getAllUsers(pageNumberPagination),{
     keepPreviousData:true
   });
-
-  if(isLoading) return <div>Loading...</div>
-  if(isError) return <div>Error {error.message}</div>
 
 
   const handleToggleFlag = (id) => {
@@ -46,24 +43,23 @@ function Table() {
     }
   }
 
-  const router = useRouter()
+ 
+  // Functions HandlePaginations 
   function handleAddPagePaginationToReduxPrev() {
-
     setPageNumberPagination((prev) => prev - 1)
-
     dispatch(numberPaginationFun(pageNumberPagination))
-
   }
 
   function handleAddPagePaginationToReduxNext() {
-
     setPageNumberPagination((prev) => prev + 1)
-
     dispatch(numberPaginationFun(pageNumberPagination))
-
   }
 
 
+
+
+  if(isLoading) return <div>Loading...</div>
+  if(isError) return <div>Error {error.message}</div>
   
  
   return (
@@ -113,7 +109,7 @@ function Table() {
       </table>
 
       {/* Start Pagination  */}
-      <div className="">
+      <div>
         <ul className={`flex justify-around items-center m-auto bg-slate-100 mt-5 w-1/2 h-10 rounded-full ${isFetching && "border-black"} border relative duration-500`}>
           <li>
             <button onClick={() => handleAddPagePaginationToReduxPrev() } disabled={pageNumberPagination <= 1} className={`flex items-center top-0 py-2 px-4 rounded-full ${pageNumberPagination <= 1 ? "scale-100 bg-slate-400 absolute left-0" : "scale-110 bg-slate-200 left-20"}  text-gray-900 hover:scale-100 duration-500 `}>
